@@ -67,3 +67,12 @@
   - Exemplos de requisição e resposta
   - Configuração de autenticação JWT
   - Configuração de tags e categorias
+
+## [0.4.0] - 2023-04-03
+
+### Adicionado
+
+- Implementação dos casos de uso/controllers para o domínio de url
+- Criação dos testes unitários
+- Melhoria na tipagem das requisições autenticadas
+  - Criação da interface centralizada `AuthenticatedRequest` em `src/infra/http/types/authenticated-request.ts`
