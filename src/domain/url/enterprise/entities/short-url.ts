@@ -34,6 +34,22 @@ export class ShortUrl extends Entity<ShortUrlProps> {
     return this.props.updatedAt;
   }
 
+  set originalUrl(url: string) {
+    this.props.originalUrl = url;
+  }
+
+  set clicks(count: number) {
+    this.props.clicks = count;
+  }
+
+  set updatedAt(date: Date) {
+    this.props.updatedAt = date;
+  }
+
+  incrementClicks() {
+    this.props.clicks += 1;
+  }
+
   static create(props: ShortUrlProps, id?: UniqueEntityID) {
     const shortUrl = new ShortUrl(props, id);
 

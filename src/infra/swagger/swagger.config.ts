@@ -8,15 +8,12 @@ export function setupSwagger(app: INestApplication) {
       'API para encurtamento de URLs com autenticação de usuários',
     )
     .setVersion('1.0')
-    .addTag('auth')
-    .addTag('accounts')
-    .addTag('urls')
     .addBearerAuth(
       {
         type: 'http',
         scheme: 'bearer',
         bearerFormat: 'JWT',
-        name: 'JWT',
+        name: 'Authorization',
         description: 'Insira o token JWT',
         in: 'header',
       },
@@ -25,5 +22,26 @@ export function setupSwagger(app: INestApplication) {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+
+  const options = {
+    swaggerOptions: {
+      persistAuthorization: true,
+      authAction: {
+        'JWT-auth': {
+          name: 'JWT-auth',
+          schema: {
+            type: 'http',
+            in: 'header',
+            name: 'Authorization',
+            description: 'JWT Token',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+          value: '',
+        },
+      },
+    },
+  };
+
+  SwaggerModule.setup('docs', app, document, options);
 }
