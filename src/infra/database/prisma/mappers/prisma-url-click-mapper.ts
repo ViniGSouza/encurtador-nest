@@ -7,9 +7,6 @@ export class PrismaUrlClickMapper {
     return UrlClick.create(
       {
         shortUrlId: raw.shortUrlId,
-        ipAddress: raw.ipAddress || '',
-        userAgent: raw.userAgent || '',
-        referer: raw.referer || '',
       },
       new UniqueEntityID(raw.id),
     );
@@ -19,9 +16,6 @@ export class PrismaUrlClickMapper {
     return {
       id: urlClick.id.toString(),
       shortUrlId: urlClick.shortUrlId,
-      ipAddress: urlClick.ipAddress || null,
-      userAgent: urlClick.userAgent || null,
-      referer: urlClick.referer || null,
       createdAt: new Date(),
     };
   }

@@ -7,9 +7,6 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 
 interface RegisterUrlClickUseCaseRequest {
   shortUrlId: string;
-  ipAddress?: string;
-  userAgent?: string;
-  referer?: string;
 }
 
 type RegisterUrlClickUseCaseResponse = Either<
@@ -28,9 +25,6 @@ export class RegisterUrlClickUseCase {
 
   async execute({
     shortUrlId,
-    ipAddress,
-    userAgent,
-    referer,
   }: RegisterUrlClickUseCaseRequest): Promise<RegisterUrlClickUseCaseResponse> {
     const shortUrl = await this.shortUrlRepository.findById(shortUrlId);
 
@@ -42,9 +36,6 @@ export class RegisterUrlClickUseCase {
 
     const urlClick = UrlClick.create({
       shortUrlId,
-      ipAddress: ipAddress || '',
-      userAgent: userAgent || '',
-      referer: referer || '',
     });
 
     await this.urlClickRepository.create(urlClick);

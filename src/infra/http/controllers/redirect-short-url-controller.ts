@@ -2,8 +2,6 @@ import {
   BadRequestException,
   Controller,
   Get,
-  Headers,
-  Ip,
   NotFoundException,
   Param,
   Redirect,
@@ -42,13 +40,7 @@ export class RedirectShortUrlController {
     status: 404,
     description: 'URL curta não encontrada',
   })
-  async handle(
-    @Param('code') code: string,
-    @Ip() ip: string,
-    @Headers('user-agent') userAgent: string,
-    @Headers('referer') referer: string,
-    @Req() request: Request,
-  ) {
+  async handle(@Param('code') code: string, @Req() request: Request) {
     const result = await this.getShortUrlByCode.execute({
       shortCode: code,
     });
@@ -69,9 +61,6 @@ export class RedirectShortUrlController {
     this.registerUrlClick
       .execute({
         shortUrlId: shortUrl.id.toString(),
-        ipAddress: ip,
-        userAgent,
-        referer,
       })
       .catch((error) => {
         console.error('Erro ao registrar clique:', error);

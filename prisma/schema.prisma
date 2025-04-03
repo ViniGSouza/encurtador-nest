@@ -39,9 +39,6 @@ model ShortUrl {
 model UrlClick {
   id         String   @id @default(uuid())
   shortUrlId String   @map("short_url_id")
-  ipAddress  String?  @map("ip_address")
-  userAgent  String?  @map("user_agent")
-  referer    String?
   createdAt  DateTime @default(now()) @map("created_at")
 
   @@map("url_clicks")
