@@ -16,12 +16,13 @@ import { EnvModule } from '../env/env.module';
       global: true,
       useFactory(env: EnvService) {
         const privateKey = env.get('JWT_PRIVATE_KEY');
-        const publicKey = env.get('JWT_PUBLIC_KEY');
 
         return {
-          signOptions: { algorithm: 'RS256' },
-          privateKey: Buffer.from(privateKey, 'base64'),
-          publicKey: Buffer.from(publicKey, 'base64'),
+          secret: privateKey,
+          signOptions: {
+            algorithm: 'HS256',
+            expiresIn: '1d',
+          },
         };
       },
     }),

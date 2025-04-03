@@ -43,3 +43,27 @@
 
 - Módulo DatabaseModule para injeção de dependências
   - Registro dos repositórios Prisma como implementações dos contratos
+
+## [0.3.0] - 2023-04-03
+
+### Adicionado
+
+- Implementação dos casos de uso para usuários
+  - RegisterUserUseCase para cadastro de novos usuários
+  - AuthenticateUserUseCase para autenticação com geração de JWT
+- Implementação de testes unitários para os casos de uso
+- Implementação dos controllers REST para usuários
+  - CreateAccountController: Endpoint para criação de usuários
+  - AuthenticateController: Endpoint para autenticação (login)
+- Validação de dados com Zod
+- ZodValidationPipe para transformação e validação de dados de entrada
+
+### Configurado
+
+- Estrutura de testes com Vitest
+- Repositórios in-memory para testes unitários
+- Documentação da API com Swagger/OpenAPI
+  - Descrição dos endpoints
+  - Exemplos de requisição e resposta
+  - Configuração de autenticação JWT
+  - Configuração de tags e categorias
