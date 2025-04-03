@@ -19,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { Public } from '@/infra/auth/public';
 import { AuthenticatedRequest } from '@/infra/http/types/authenticated-request';
+import { EnvService } from '@/infra/env/env.service';
 
 const createShortUrlBodySchema = z.object({
   originalUrl: z.string().url(),
@@ -30,7 +31,10 @@ type CreateShortUrlBodySchema = z.infer<typeof createShortUrlBodySchema>;
 @Public()
 @ApiTags('short-urls')
 export class CreateShortUrlController {
-  constructor(private createShortUrl: CreateShortUrlUseCase) {}
+  constructor(
+    private createShortUrl: CreateShortUrlUseCase,
+    private envService: EnvService,
+  ) {}
 
   @Post()
   @HttpCode(201)
@@ -85,12 +89,13 @@ export class CreateShortUrlController {
     }
 
     const { shortUrl } = result.value;
+    const shortUrlDomain = this.envService.get('SHORT_URL_DOMAIN');
 
     return {
       id: shortUrl.id.toString(),
       originalUrl: shortUrl.originalUrl,
       shortCode: shortUrl.shortCode,
-      fullShortUrl: `${process.env.SHORT_URL_DOMAIN || 'http://localhost:3333'}/${shortUrl.shortCode}`,
+      fullShortUrl: `${shortUrlDomain}/${shortUrl.shortCode}`,
       clicks: shortUrl.clicks,
       createdAt: shortUrl.createdAt,
       updatedAt: shortUrl.updatedAt,

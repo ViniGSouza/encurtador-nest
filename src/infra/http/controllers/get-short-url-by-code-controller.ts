@@ -17,12 +17,16 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthenticatedRequest } from '@/infra/http/types/authenticated-request';
+import { EnvService } from '@/infra/env/env.service';
 
 @Controller('/short-urls')
 @ApiTags('short-urls')
 @ApiBearerAuth('JWT-auth')
 export class GetShortUrlByCodeController {
-  constructor(private getShortUrlByCode: GetShortUrlByCodeUseCase) {}
+  constructor(
+    private getShortUrlByCode: GetShortUrlByCodeUseCase,
+    private envService: EnvService,
+  ) {}
 
   @Get('/:code')
   @ApiOperation({ summary: 'Obter URL curta pelo código' })
@@ -64,7 +68,6 @@ export class GetShortUrlByCodeController {
     @Request() req: AuthenticatedRequest,
   ) {
     const userId = req.user.sub;
-    console.log(userId);
 
     const result = await this.getShortUrlByCode.execute({
       shortCode: code,
@@ -89,11 +92,13 @@ export class GetShortUrlByCodeController {
       );
     }
 
+    const shortUrlDomain = this.envService.get('SHORT_URL_DOMAIN');
+
     return {
       id: shortUrl.id.toString(),
       originalUrl: shortUrl.originalUrl,
       shortCode: shortUrl.shortCode,
-      fullShortUrl: `${process.env.SHORT_URL_DOMAIN || 'http://localhost:3000'}/${shortUrl.shortCode}`,
+      fullShortUrl: `${shortUrlDomain}/${shortUrl.shortCode}`,
       clicks: shortUrl.clicks,
       createdAt: shortUrl.createdAt,
       updatedAt: shortUrl.updatedAt,

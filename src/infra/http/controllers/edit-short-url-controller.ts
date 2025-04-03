@@ -24,6 +24,7 @@ import {
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { AuthenticatedRequest } from '@/infra/http/types/authenticated-request';
+import { EnvService } from '@/infra/env/env.service';
 
 const editShortUrlBodySchema = z.object({
   originalUrl: z.string().url(),
@@ -35,7 +36,10 @@ type EditShortUrlBodySchema = z.infer<typeof editShortUrlBodySchema>;
 @ApiTags('short-urls')
 @ApiBearerAuth('JWT-auth')
 export class EditShortUrlController {
-  constructor(private editShortUrl: EditShortUrlUseCase) {}
+  constructor(
+    private editShortUrl: EditShortUrlUseCase,
+    private envService: EnvService,
+  ) {}
 
   @Put()
   @HttpCode(200)
@@ -54,7 +58,7 @@ export class EditShortUrlController {
         originalUrl: {
           type: 'string',
           format: 'url',
-          example: 'https://example.com/new-url-after-edit',
+          example: 'https://example.com/new-url',
         },
       },
       required: ['originalUrl'],
@@ -69,11 +73,11 @@ export class EditShortUrlController {
         id: { type: 'string', example: 'uuid-v4' },
         originalUrl: {
           type: 'string',
-          example: 'https://example.com/new-url-after-edit',
+          example: 'https://example.com/new-url',
         },
         shortCode: { type: 'string', example: 'abc123' },
         fullShortUrl: { type: 'string', example: 'http://short.url/abc123' },
-        clicks: { type: 'number', example: 10 },
+        clicks: { type: 'number', example: 0 },
         createdAt: { type: 'string', format: 'date-time' },
         updatedAt: { type: 'string', format: 'date-time' },
       },
@@ -115,12 +119,13 @@ export class EditShortUrlController {
     }
 
     const { shortUrl } = result.value;
+    const shortUrlDomain = this.envService.get('SHORT_URL_DOMAIN');
 
     return {
       id: shortUrl.id.toString(),
       originalUrl: shortUrl.originalUrl,
       shortCode: shortUrl.shortCode,
-      fullShortUrl: `${process.env.SHORT_URL_DOMAIN || 'http://localhost:3000'}/${shortUrl.shortCode}`,
+      fullShortUrl: `${shortUrlDomain}/${shortUrl.shortCode}`,
       clicks: shortUrl.clicks,
       createdAt: shortUrl.createdAt,
       updatedAt: shortUrl.updatedAt,

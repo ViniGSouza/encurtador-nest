@@ -15,6 +15,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { z } from 'zod';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { EnvService } from '@/infra/env/env.service';
 
 const paginationSchema = z.object({
   page: z.number().min(1).default(1),
@@ -27,7 +29,10 @@ type PaginationSchema = z.infer<typeof paginationSchema>;
 @ApiTags('short-urls')
 @ApiBearerAuth('JWT-auth')
 export class FetchUserShortUrlsController {
-  constructor(private fetchUserShortUrls: FetchUserShortUrlsUseCase) {}
+  constructor(
+    private fetchUserShortUrls: FetchUserShortUrlsUseCase,
+    private envService: EnvService,
+  ) {}
 
   @Post('/list')
   @ApiOperation({ summary: 'Listar URLs curtas do usuário' })
@@ -104,8 +109,8 @@ export class FetchUserShortUrlsController {
     }
 
     const { shortUrls, totalCount } = result.value;
-
     const totalPages = Math.ceil(totalCount / perPage);
+    const shortUrlDomain = this.envService.get('SHORT_URL_DOMAIN');
 
     return {
       shortUrls: shortUrls.map((shortUrl) => {
@@ -113,7 +118,7 @@ export class FetchUserShortUrlsController {
           id: shortUrl.id.toString(),
           originalUrl: shortUrl.originalUrl,
           shortCode: shortUrl.shortCode,
-          fullShortUrl: `${process.env.SHORT_URL_DOMAIN || 'http://localhost:3333'}/${shortUrl.shortCode}`,
+          fullShortUrl: `${shortUrlDomain}/${shortUrl.shortCode}`,
           clicks: shortUrl.clicks,
           createdAt: shortUrl.createdAt,
           updatedAt: shortUrl.updatedAt,
