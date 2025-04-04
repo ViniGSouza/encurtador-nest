@@ -2,6 +2,11 @@
 
 Sistema de encurtamento de URLs desenvolvido com NestJS, PostgreSQL e Prisma ORM.
 
+## Aplicação Deployada
+
+- https://encurtador-nest.onrender.com/
+- Documentação Swagger: https://encurtador-nest.onrender.com/docs
+
 ## Tecnologias Utilizadas
 
 - **NestJS**: Framework Node.js para construir aplicações server-side eficientes e escaláveis
@@ -20,6 +25,32 @@ Sistema de encurtamento de URLs desenvolvido com NestJS, PostgreSQL e Prisma ORM
 - Estatísticas de cliques nas URLs encurtadas
 - Redirecionamento de URLs curtas para URLs originais
 - Gerenciamento de URLs criadas pelo usuário
+
+## Considerações para Escalabilidade Horizontal
+
+### Pontos de Melhoria para Escalabilidade
+
+1. **Implementação de Cache Distribuído**: Utilizar Redis para armazenar URLs frequentemente acessadas, reduzindo a carga no banco de dados.
+
+2. **Balanceamento de Carga**: Implementar um load balancer para distribuir o tráfego entre múltiplas instâncias da aplicação.
+
+3. **Banco de Dados Escalável**: Considerar a implementação de sharding e replicação no PostgreSQL ou migração para um banco de dados distribuído.
+
+4. **Serviço de Filas**: Implementar um sistema de filas (como RabbitMQ ou Apache Kafka) para processar operações assíncronas, como geração de estatísticas.
+
+5. **Armazenamento de Sessão Distribuído**: Extrair o gerenciamento de sessão/tokens para um serviço dedicado.
+
+### Desafios da Escalabilidade Horizontal
+
+1. **Consistência de Dados**: Garantir que todas as instâncias da aplicação tenham acesso consistente aos mesmos dados.
+
+2. **Gerenciamento de Estado**: Lidar com o estado da aplicação entre várias instâncias.
+
+3. **Monitoramento e Observabilidade**: Implementar ferramentas eficientes de monitoramento para identificar gargalos de performance.
+
+4. **Estratégia de Migração de Banco de Dados**: Migrar de uma arquitetura monolítica para distribuída sem interrupções de serviço.
+
+5. **Latência de Redirecionamento**: Manter baixa a latência no serviço de redirecionamento, que é crítico para a experiência do usuário.
 
 ## Pré-requisitos
 
