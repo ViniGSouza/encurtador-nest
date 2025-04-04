@@ -1,4 +1,5 @@
 import { FetchUserShortUrlsUseCase } from '@/domain/url/application/use-cases/fetch-user-short-urls';
+import { EnvService } from '@/infra/env/env.service';
 import { AuthenticatedRequest } from '@/infra/http/types/authenticated-request';
 import {
   BadRequestException,
@@ -15,9 +16,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
-import { EnvService } from '@/infra/env/env.service';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const paginationSchema = z.object({
   page: z.number().min(1).default(1),
   perPage: z.number().min(1).max(100).default(10),

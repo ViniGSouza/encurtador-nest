@@ -1,5 +1,4 @@
 import { Entity, UniqueEntityID } from '@/core/entities';
-import { ShortUrl } from '@/domain/url/enterprise/entities/short-url';
 
 export interface UserProps {
   name: string;

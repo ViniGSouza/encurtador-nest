@@ -1,3 +1,7 @@
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
+import { GetShortUrlByCodeUseCase } from '@/domain/url/application/use-cases/get-short-url-by-code';
+import { RegisterUrlClickUseCase } from '@/domain/url/application/use-cases/register-url-click';
+import { Public } from '@/infra/auth/public';
 import {
   BadRequestException,
   Controller,
@@ -5,14 +9,8 @@ import {
   NotFoundException,
   Param,
   Redirect,
-  Req,
 } from '@nestjs/common';
-import { GetShortUrlByCodeUseCase } from '@/domain/url/application/use-cases/get-short-url-by-code';
-import { RegisterUrlClickUseCase } from '@/domain/url/application/use-cases/register-url-click';
-import { Public } from '@/infra/auth/public';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error';
-import { Request } from 'express';
 
 @Controller()
 @ApiTags('redirect')
@@ -40,7 +38,7 @@ export class RedirectShortUrlController {
     status: 404,
     description: 'URL curta não encontrada',
   })
-  async handle(@Param('code') code: string, @Req() request: Request) {
+  async handle(@Param('code') code: string) {
     const result = await this.getShortUrlByCode.execute({
       shortCode: code,
     });

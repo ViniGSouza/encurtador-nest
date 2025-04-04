@@ -1,25 +1,19 @@
+import { CreateShortUrlUseCase } from '@/domain/url/application/use-cases/create-short-url';
+import { Public } from '@/infra/auth/public';
+import { EnvService } from '@/infra/env/env.service';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
+import { AuthenticatedRequest } from '@/infra/http/types/authenticated-request';
 import {
   BadRequestException,
   Body,
   Controller,
   HttpCode,
   Post,
-  UsePipes,
   Request,
+  UsePipes,
 } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { z } from 'zod';
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
-import { CreateShortUrlUseCase } from '@/domain/url/application/use-cases/create-short-url';
-import {
-  ApiBody,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-  ApiBearerAuth,
-} from '@nestjs/swagger';
-import { Public } from '@/infra/auth/public';
-import { AuthenticatedRequest } from '@/infra/http/types/authenticated-request';
-import { EnvService } from '@/infra/env/env.service';
 
 const createShortUrlBodySchema = z.object({
   originalUrl: z.string().url(),

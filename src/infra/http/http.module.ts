@@ -17,9 +17,10 @@ import { RegisterUrlClickUseCase } from '@/domain/url/application/use-cases/regi
 import { EditShortUrlUseCase } from '@/domain/url/application/use-cases/edit-short-url';
 import { DeleteShortUrlUseCase } from '@/domain/url/application/use-cases/delete-short-url';
 import { FetchUserShortUrlsUseCase } from '@/domain/url/application/use-cases/fetch-user-short-urls';
+import { EnvModule } from '../env/env.module';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, EnvModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
