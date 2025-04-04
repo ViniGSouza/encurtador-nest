@@ -2,9 +2,9 @@ import { Controller, Get } from '@nestjs/common';
 import { Public } from '@/infra/auth/public';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@Controller('/ping')
+@Controller('/health-check/ping')
 @Public()
-@ApiTags('health')
+@ApiTags('health-check')
 export class PingController {
   @Get()
   @ApiOperation({ summary: 'Verificar estado da aplicação' })
