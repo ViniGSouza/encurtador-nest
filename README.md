@@ -4,8 +4,8 @@ Sistema de encurtamento de URLs desenvolvido com NestJS, PostgreSQL e Prisma ORM
 
 ## Aplicação Deployada
 
-- https://encurtador-nest.onrender.com/
-- Documentação Swagger: https://encurtador-nest.onrender.com/docs
+- https://encurteddy.up.railway.app//
+- Documentação Swagger: https://encurteddy.up.railway.app/docs
 
 ## Tecnologias Utilizadas
 
