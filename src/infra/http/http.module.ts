@@ -18,6 +18,7 @@ import { EditShortUrlUseCase } from '@/domain/url/application/use-cases/edit-sho
 import { DeleteShortUrlUseCase } from '@/domain/url/application/use-cases/delete-short-url';
 import { FetchUserShortUrlsUseCase } from '@/domain/url/application/use-cases/fetch-user-short-urls';
 import { EnvModule } from '../env/env.module';
+import { PingController } from './controllers/ping-controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, EnvModule],
@@ -30,6 +31,7 @@ import { EnvModule } from '../env/env.module';
     EditShortUrlController,
     DeleteShortUrlController,
     FetchUserShortUrlsController,
+    PingController,
   ],
   providers: [
     RegisterUserUseCase,
