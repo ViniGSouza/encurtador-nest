@@ -4,7 +4,7 @@ Sistema de encurtamento de URLs desenvolvido com NestJS, PostgreSQL e Prisma ORM
 
 ## Aplicação Deployada
 
-- https://encurteddy.up.railway.app//
+- https://encurteddy.up.railway.app/
 - Documentação Swagger: https://encurteddy.up.railway.app/docs
 
 ## Tecnologias Utilizadas
