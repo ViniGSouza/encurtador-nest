@@ -93,6 +93,7 @@ export class ShortUrl extends Model<
 
   @DeletedAt
   @Column({
+    type: DataType.DATE,
     field: 'deleted_at',
   })
   declare deletedAt: Date | null;
