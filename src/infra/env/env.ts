@@ -6,6 +6,7 @@ export const envSchema = z.object({
   JWT_PUBLIC_KEY: z.string(),
   PORT: z.coerce.number().optional().default(3333),
   SHORT_URL_DOMAIN: z.string().optional().default('http://localhost:3333'),
+  ORM_PROVIDER: z.enum(['prisma', 'sequelize']).optional().default('sequelize'),
 });
 
 export type Env = z.infer<typeof envSchema>;

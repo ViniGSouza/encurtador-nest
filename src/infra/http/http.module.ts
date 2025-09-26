@@ -21,7 +21,7 @@ import { EnvModule } from '../env/env.module';
 import { PingController } from './controllers/ping-controller';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, EnvModule],
+  imports: [DatabaseModule.create(), CryptographyModule, EnvModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,

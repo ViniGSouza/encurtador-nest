@@ -44,10 +44,8 @@ export class InMemoryShortUrlRepository implements ShortUrlRepository {
     const shortUrl = this.items.find((item) => item.id.toString() === id);
 
     if (shortUrl) {
-      // Para os testes, vamos criar um novo objeto ShortUrl com o clique incrementado
       const index = this.items.findIndex((item) => item.id.toString() === id);
 
-      // Criamos um novo ShortUrl com as mesmas propriedades mas com clicks incrementado
       this.items[index] = ShortUrl.create(
         {
           originalUrl: shortUrl.originalUrl,

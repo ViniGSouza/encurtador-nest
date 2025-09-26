@@ -22,9 +22,6 @@ export class InMemoryUrlClickRepository implements UrlClickRepository {
       this.items
         .filter((item) => item.shortUrlId === shortUrlId)
         .sort((a, b) => {
-          // Comparar pela data de criação, assumindo que existe uma propriedade createdAt
-          // Normalmente, usaríamos o timestamp de criação, mas como é um mock para testes,
-          // vamos ordenar pelo ID que consideramos ser sequencial
           return a.id.toString().localeCompare(b.id.toString());
         })
         .pop() || null;
@@ -40,7 +37,6 @@ export class InMemoryUrlClickRepository implements UrlClickRepository {
     const urlClicks = this.items
       .filter((item) => item.shortUrlId === shortUrlId)
       .sort((a, b) => {
-        // Ordenação pelo ID como um substituto para a data de criação em testes
         return b.id.toString().localeCompare(a.id.toString());
       })
       .slice((page - 1) * perPage, page * perPage);
